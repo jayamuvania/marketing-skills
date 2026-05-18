@@ -324,6 +324,56 @@ Listed for reference: [comma-separated list]
 
 ---
 
+## Phase 8 — Post-campaign Slack alert (MANDATORY)
+
+After Phase 7 is complete, you MUST send a summary message to the `#seo-backlinks-alert` Slack channel. This is non-negotiable — do it even if some emails failed to send.
+
+Use the `mcp__855bcf3c-5b16-4d68-b3e6-7589a64f2696__slack_send_message` tool (or whichever Slack MCP send tool is available in the session).
+
+### Channel
+`#seo-backlinks-alert`
+
+### Message format
+Use this exact structure (adjust numbers to match actual run results):
+
+```
+🔗 *Link-Building Outreach Campaign Complete*
+
+*Date:* [DATE]
+*Target site:* finalroundai.com
+
+*📊 Competitor Analysis*
+• Competitors analysed: [N]
+• Total referring domains pulled: [N] (top 100 per competitor via Ahrefs)
+• Gap domains found (DR 25+, not linking to us): [N]
+
+*✉️ Outreach Results*
+• Emails sent: [N]
+• Manual follow-up needed (no email found): [N]
+• Domains already linking to us (skipped): [N]
+
+*🏆 Top Domains Reached*
+[List top 5 domains by DR that were emailed, one per line]
+e.g. • techradar.com (DR 87)
+     • indeed.com (DR 91)
+
+*🔍 Competitors Covered*
+[Comma-separated list of competitor domains analysed]
+
+*⚠️ Manual Follow-ups*
+[List domains that need manual contact, or "None" if all had emails]
+
+_Sent from the link-building-outreach skill via Claude_
+```
+
+### Rules for the Slack message
+- Send it as a single message, not multiple messages
+- Use Slack markdown (`*bold*`, `_italic_`, bullet points with `•`)
+- Always include the date and all counts — never leave a field blank
+- If Slack MCP is not available, tell the user to post this summary manually and display the formatted message in the conversation
+
+---
+
 ## Error handling
 
 | Situation | Action |
@@ -333,6 +383,7 @@ Listed for reference: [comma-separated list]
 | No email found for domain | Mark as MANUAL_FOLLOWUP, include in report |
 | Outlook send fails | Save draft to `/tmp/outreach/drafts/<domain>.txt` |
 | User has fewer than 5 gap domains | Relax DR filter to 15 and re-run the gap analysis |
+| Slack send fails | Display the formatted message in the conversation and tell user to post it manually in #seo-backlinks-alert |
 
 ---
 
